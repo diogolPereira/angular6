@@ -36,11 +36,14 @@ export class UserService {
   }
 
 
-  setMainPhoto(userId: number, id: number){
+
+  setMainPhoto(userId: number, id: number) {
     // tslint:disable-next-line:max-line-length
     return this.http.post(this.baseUrl + 'users/' + userId + '/photos/' + id + '/setMain', {}, this.jwt()).pipe(catchError(this.handleError));
   }
-
+  deletePhoto(userId: number, id: number) {
+    return this.http.delete(this.baseUrl + 'users/' +  userId + '/photos/' + id , this.jwt()).pipe(catchError(this.handleError));
+  }
   private jwt() {
     // tslint:disable-next-line:prefer-const
     let token = localStorage.getItem('token');
@@ -54,7 +57,6 @@ export class UserService {
 
   private handleError(error: any) {
     // tslint:disable-next-line:no-debugger
-    debugger;
     const applicationError = error.headers.get('Application-Error');
     if (applicationError) {
         return throwError(applicationError);
