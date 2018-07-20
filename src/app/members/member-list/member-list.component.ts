@@ -32,7 +32,7 @@ export class MemberListComponent implements OnInit {
     this.userParams.orderBy = 'lastActive';
   }
   loadUsers() {
-    this.userService.getUsers(this.pagination.currentPage, this.pagination.itemsPerPage,this.userParams)
+    this.userService.getUsers(this.pagination.currentPage, this.pagination.itemsPerPage, this.userParams)
       .subscribe((res: PaginatedResult<User[]>) => {
         this.users = res.result;
         this.pagination = res.pagination;

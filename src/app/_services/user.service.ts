@@ -1,3 +1,4 @@
+
 import { User } from './../_models/user';
 import { Observable, throwError } from 'rxjs';
 import { Http, RequestOptions, Headers, Response } from '@angular/http';
@@ -17,19 +18,29 @@ export class UserService {
   constructor(private http: Http) {}
 
 
-  getUsers(page?: number, itemsPerPage?: number, userParams?: any) {
+
+  getUsers(page?: number, itemsPerPage?: number, userParams?: any, likesParam?: string) {
     const paginatedResult: PaginatedResult<User[]> = new PaginatedResult<User[]>();
     let queryString = '?';
 
     if (page != null && itemsPerPage != null) {
       queryString += 'pageNumber=' + page + '&pageSize=' + itemsPerPage + '&';
     }
+
+    if (likesParam === 'Likers') {
+      queryString += 'Likers=true&';
+    }
+
+    if (likesParam === 'Likees') {
+      queryString += 'Likees=true&';
+    }
+
     if (userParams != null) {
       queryString +=
-      'minAge=' + userParams.minAge +
-      '&maxAge=' + userParams.maxAge +
-      '&gender=' + userParams.gender +
-      '&orderBy=' + userParams.orderBy;
+        'minAge=' + userParams.minAge +
+        '&maxAge=' + userParams.maxAge +
+        '&gender=' + userParams.gender +
+        '&orderBy=' + userParams.orderBy;
     }
     return this.http
     .get(this.baseUrl + 'users' + queryString, this.jwt())
@@ -66,7 +77,9 @@ export class UserService {
   deletePhoto(userId: number, id: number) {
     return this.http.delete(this.baseUrl + 'users/' + userId + '/photos/' + id , this.jwt()).pipe(catchError(this.handleError));
   }
-
+  sendLike(id: number, recipientId: number) {
+    return this.http.post(this.baseUrl + 'users/' + id + '/like/' + recipientId , {}, this.jwt()).pipe(catchError(this.handleError));
+  }
 
   private jwt() {
     // tslint:disable-next-line:prefer-const

@@ -1,10 +1,17 @@
+import { ListsResolver } from './_resolvers/lists.resolver';
 import { appRoutes } from './routes';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {TimeAgoPipe} from 'time-ago-pipe';
-import { BsDropdownModule, TabsModule, BsDatepickerModule, PaginationModule, ButtonsModule } from 'ngx-bootstrap';
+import { TimeAgoPipe } from 'time-ago-pipe';
+import {
+  BsDropdownModule,
+  TabsModule,
+  BsDatepickerModule,
+  PaginationModule,
+  ButtonsModule
+} from 'ngx-bootstrap';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { AuthService } from './_services/auth.service';
@@ -31,59 +38,58 @@ import { PhotoEditorComponent } from './members/photo-editor/photo-editor.compon
 import { FileUploadModule } from '../../node_modules/ng2-file-upload';
 
 export function tokenGetter() {
-    return localStorage.getItem('token');
-  }
+  return localStorage.getItem('token');
+}
 
 @NgModule({
-   declarations: [
-      AppComponent,
-      NavComponent,
-      HomeComponent,
-      RegisterComponent,
-      MemberListComponent,
-      ListsComponent,
-      MessagesComponent,
-      MemberCardComponent,
-      MemberDetailComponent,
-      MemberEditComponent,
-      PhotoEditorComponent,
-      TimeAgoPipe
-   ],
-   imports: [
-      BrowserModule,
-      HttpModule,
-      BsDatepickerModule.forRoot(),
-      FormsModule,
-      RouterModule.forRoot(appRoutes),
-      BsDropdownModule.forRoot(),
-      TabsModule.forRoot(),
-      HttpClientModule,
-      JwtModule.forRoot({
-        config: {
-          tokenGetter: tokenGetter,
-          whitelistedDomains: ['localhost:5000'],
-          blacklistedRoutes: ['localhost:5000/auth/']
-        }
-      }),
-      NgxGalleryModule,
-      FileUploadModule,
-      ReactiveFormsModule,
-      PaginationModule.forRoot(),
-      ButtonsModule.forRoot(),
-   ],
+  declarations: [
+    AppComponent,
+    NavComponent,
+    HomeComponent,
+    RegisterComponent,
+    MemberListComponent,
+    ListsComponent,
+    MessagesComponent,
+    MemberCardComponent,
+    MemberDetailComponent,
+    MemberEditComponent,
+    PhotoEditorComponent,
+    TimeAgoPipe
+  ],
+  imports: [
+    BrowserModule,
+    HttpModule,
+    BsDatepickerModule.forRoot(),
+    FormsModule,
+    RouterModule.forRoot(appRoutes),
+    BsDropdownModule.forRoot(),
+    TabsModule.forRoot(),
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:5000'],
+        blacklistedRoutes: ['localhost:5000/auth/']
+      }
+    }),
+    NgxGalleryModule,
+    FileUploadModule,
+    ReactiveFormsModule,
+    PaginationModule.forRoot(),
+    ButtonsModule.forRoot()
+  ],
 
-   providers: [
-      AuthService,
-      AlertifyService,
-      AuthGuard,
-      UserService,
-      MemberDetailResolver,
-      MemberListResolver,
-      MemberEditResolver,
-      PreventUnsavedChanges
-   ],
-   bootstrap: [
-      AppComponent
-   ]
+  providers: [
+    AuthService,
+    AlertifyService,
+    AuthGuard,
+    UserService,
+    MemberDetailResolver,
+    MemberListResolver,
+    MemberEditResolver,
+    PreventUnsavedChanges,
+    ListsResolver
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
